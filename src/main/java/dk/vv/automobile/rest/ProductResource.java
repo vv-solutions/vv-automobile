@@ -11,7 +11,7 @@ import java.util.List;
 
 @ApplicationScoped
 @Resource
-@Path("api/product/")
+@Path("/product/")
 @Produces("application/json")
 @Consumes("application/json")
 public class ProductResource {
