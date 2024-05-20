@@ -9,10 +9,15 @@ public class ProductAvailability {
     @Id
     private int id;
 
+    @Column(name = "quantity")
+    private int quantity;
+
     @OneToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
+    public ProductAvailability() {
+    }
 
     public int getId() {
         return id;
@@ -24,6 +29,14 @@ public class ProductAvailability {
 
     public Product getProduct() {
         return product;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public void setProduct(Product product) {

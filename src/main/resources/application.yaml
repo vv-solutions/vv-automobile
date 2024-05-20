@@ -19,6 +19,8 @@ quarkus:
 
     transaction-manager:
       default-transaction-timeout: 300s
-    hibernate-orm:
-      database:
-        generation: none
+  hibernate-orm:
+    database:
+      generation: none
+  devservices:
+    enabled: false
