@@ -1,0 +1,24 @@
+quarkus:
+  http:
+  #    port: 8082
+  smallrye-openapi:
+    info-title: vv-automobile
+    auto-add-security-requirement: false
+
+  swagger-ui:
+    always-include: true
+    path: /swagger
+
+
+  datasource:
+    db-kind: postgresql
+    jdbc:
+      url: jdbc:postgresql://localhost:5432/automobile?currentSchema=shop
+    username: postgres
+    password: mysecretpassword
+
+    transaction-manager:
+      default-transaction-timeout: 300s
+    hibernate-orm:
+      database:
+        generation: none
