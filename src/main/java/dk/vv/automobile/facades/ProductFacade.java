@@ -24,7 +24,7 @@ public class ProductFacade {
         return new ProductDTO(slaveEntityManager.find(Product.class,id));
     }
 
-    public List<ProductDTO> getProductsWithPaginationByCategory(int count, int page,int categoryId,String orderBy, String direction,List<Integer> brands) {
+    public List<ProductDTO> getProductsWithPaginationByCategory(int count, int page,int categoryId,String orderBy,List<Integer> brands) {
 
 
             StringBuilder queryBuilder = new StringBuilder("select new dk.vv.automobile.dtos.ProductDTO(p) from Product p");
@@ -37,15 +37,14 @@ public class ProductFacade {
                 queryBuilder.append(" and p.brandId in :brands");
             }
 
-            if(orderBy.equalsIgnoreCase("price")){
+            if(orderBy.equalsIgnoreCase("priceDesc")){
+                queryBuilder.append(" order by p.price desc, p.id asc");
 
-                if(direction.equalsIgnoreCase("desc")){
-                    queryBuilder.append(" order by p.price desc");
-                } else {
-                    queryBuilder.append(" order by p.price asc");
-                }
-            } else {
-                queryBuilder.append(" order by pp.purchaseCount desc");
+            } else if(orderBy.equalsIgnoreCase("priceAsc")){
+                queryBuilder.append(" order by p.price asc, p.id asc");
+            }
+            else {
+                queryBuilder.append(" order by pp.purchaseCount desc, p.id asc");
             }
 
 
@@ -58,7 +57,7 @@ public class ProductFacade {
             query.setParameter("categoryId", categoryId);
 
             return query.setMaxResults(count)
-                    .setFirstResult(page * count + 1)
+                    .setFirstResult(page * count)
                     .getResultList();
         }
 
