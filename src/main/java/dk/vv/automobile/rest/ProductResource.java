@@ -38,7 +38,7 @@ public class ProductResource {
 
     @GET
     @Path("/search")
-    public List<ProductDTO> searchProducts(@QueryParam("search") String search){
+    public List<ProductDTO> searchProducts(@QueryParam("query") String search){
         return productFacade.searchProducts(search);
     }
 
