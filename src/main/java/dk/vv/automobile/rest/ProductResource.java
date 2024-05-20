@@ -32,8 +32,8 @@ public class ProductResource {
 
     @GET
     @Path("/category")
-    public List<ProductDTO> getProductsByCategories(@QueryParam("category") int category, @QueryParam("count") int count, @QueryParam("page") int page, @QueryParam("brands") List<Integer> brands){
-        return productFacade.getProductsWithPaginationByCategory(count,page,category,brands);
+    public List<ProductDTO> getProductsByCategories(@QueryParam("category") int category, @QueryParam("count") int count, @QueryParam("page") int page,@QueryParam("orderBy") String orderBy, @QueryParam("direction") String direction, @QueryParam("brands") List<Integer> brands){
+        return productFacade.getProductsWithPaginationByCategory(count,page,category,orderBy,direction,brands);
     }
 
 

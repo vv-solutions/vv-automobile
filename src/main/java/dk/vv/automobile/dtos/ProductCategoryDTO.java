@@ -1,25 +1,17 @@
-package dk.vv.automobile.entities;
+package dk.vv.automobile.dtos;
 
+import dk.vv.automobile.entities.ProductCategory;
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "product_category")
-public class ProductCategory {
-
-    @Id
+public class ProductCategoryDTO {
     private int id;
-
-    @Column(name = "name")
     private String name;
 
-    public ProductCategory() {
-    }
 
-    public ProductCategory(int id) {
-        this.id = id;
+    public ProductCategoryDTO(ProductCategory productCategory) {
+        this.id = productCategory.getId();
+        this.name = productCategory.getName();
     }
 
     public int getId() {
