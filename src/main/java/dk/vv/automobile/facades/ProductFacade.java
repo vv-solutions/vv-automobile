@@ -62,4 +62,20 @@ public class ProductFacade {
                     .getResultList();
         }
 
+
+        public List<ProductDTO> getPopularProducts(int count){
+            return slaveEntityManager.createQuery("select new dk.vv.automobile.dtos.ProductDTO(p) from Product p " +
+                    " join ProductPopularity pp on pp.productId = p.id " +
+                    "order by pp.purchaseCount desc", ProductDTO.class).setMaxResults(count).getResultList();
+        }
+
+
+        public List<ProductDTO> searchProducts(String search){
+            System.out.println(search);
+            return slaveEntityManager.createQuery("Select new dk.vv.automobile.dtos.ProductDTO(p) from Product  p " +
+                    "join Brand b on p.brandId = b.id" +
+                    " where lower(p.name) LIKE :search or lower(p.description) like :search or lower(b.name) like :search", ProductDTO.class)
+                    .setParameter("search","%"+search.toLowerCase()+"%")
+                    .getResultList();
+        }
 }

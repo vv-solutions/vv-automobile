@@ -36,5 +36,15 @@ public class ProductResource {
         return productFacade.getProductsWithPaginationByCategory(count,page,category,orderBy,direction,brands);
     }
 
+    @GET
+    @Path("/search")
+    public List<ProductDTO> searchProducts(@QueryParam("search") String search){
+        return productFacade.searchProducts(search);
+    }
 
+    @GET
+    @Path("/popular/{count}")
+    public List<ProductDTO> getPopularProducts(@PathParam("count") int count){
+        return productFacade.getPopularProducts(count);
+    }
 }
