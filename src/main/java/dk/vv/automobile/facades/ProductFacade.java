@@ -58,7 +58,7 @@ public class ProductFacade {
             query.setParameter("categoryId", categoryId);
 
             return query.setMaxResults(count)
-                    .setFirstResult(page * count)
+                    .setFirstResult(page * count + 1)
                     .getResultList();
         }
 
