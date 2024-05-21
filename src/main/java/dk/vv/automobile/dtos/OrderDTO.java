@@ -1,63 +1,55 @@
-package dk.vv.automobile.entities;
+package dk.vv.automobile.dtos;
 
-import dk.vv.automobile.dtos.OrderDTO;
-import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
+import dk.vv.automobile.entities.Order;
+import dk.vv.automobile.entities.OrderLine;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-@Entity
-@Table(name = "\"order\"")
-
-public class Order {
-
-    @Id
-    @SequenceGenerator(name = "id_seq", sequenceName = "order_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "id_seq")
+public class OrderDTO {
     private int id;
-    @Column(name = "total_price")
     private BigDecimal totalPrice;
-    @Column(name = "first_name")
     private String firstName;
-    @Column(name = "last_name")
     private String lastName;
-    @Column(name = "phone")
     private String phone;
-    @Column(name = "email")
     private String email;
-    @Column(name = "street")
     private String street;
-    @Column(name = "house_number")
     private int houseNumber;
 
-    @Column(name = "address_line_2")
     private String addressLine2;
 
-    @Column(name = "zipcode")
     private int zipcode;
 
-    @Column(name = "create_timestamp")
-    @CreationTimestamp
     private LocalDateTime create;
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private Set<OrderLine> orderLines = new HashSet<>();
+    private List<OrderLineDTO> orderLines = new ArrayList<>();
 
-    public Order() {
+
+    public OrderDTO() {
     }
 
-
-    public Order(OrderDTO orderDTO) {
-        this.firstName = orderDTO.getFirstName();
-        this.lastName = orderDTO.getLastName();
-        this.phone = orderDTO.getPhone();
-        this.email = orderDTO.getEmail();
-        this.street = orderDTO.getStreet();
-        this.houseNumber = orderDTO.getHouseNumber();
-        this.addressLine2 = orderDTO.getAddressLine2();
-        this.zipcode = orderDTO.getZipcode();
+    public OrderDTO(Order order) {
+        this.id = order.getId();
+        this.totalPrice = order.getTotalPrice();
+        this.firstName = order.getFirstName();
+        this.lastName = order.getLastName();
+        this.phone = order.getPhone();
+        this.email = order.getEmail();
+        this.street = order.getStreet();
+        this.houseNumber = order.getHouseNumber();
+        this.addressLine2 = order.getAddressLine2();
+        this.zipcode = order.getZipcode();
+        this.create = order.getCreate();
+        for (OrderLine orderLine : order.getOrderLines()) {
+            this.orderLines.add(new OrderLineDTO(orderLine));
+        }
     }
 
     public int getId() {
@@ -148,19 +140,15 @@ public class Order {
         this.create = create;
     }
 
-    public Set<OrderLine> getOrderLines() {
+    public void addOrderLine(OrderLineDTO orderLineDTO){
+        this.orderLines.add(orderLineDTO);
+    }
+
+    public List<OrderLineDTO> getOrderLines() {
         return orderLines;
     }
 
-    public void setOrderLines(Set<OrderLine> orderLines) {
+    public void setOrderLines(List<OrderLineDTO> orderLines) {
         this.orderLines = orderLines;
-    }
-
-    public void addOrderLine(OrderLine orderLine){
-        this.orderLines.add(orderLine);
-
-        if(orderLine.getOrder() != this){
-            orderLine.setOrder(this);
-        }
     }
 }

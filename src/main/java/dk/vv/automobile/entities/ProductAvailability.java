@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 public class ProductAvailability {
 
     @Id
+    @SequenceGenerator(name = "id_seq", sequenceName = "product_availability_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "id_seq")
     private int id;
 
     @Column(name = "quantity")

@@ -9,6 +9,8 @@ import java.util.Set;
 public class Brand {
 
     @Id
+    @SequenceGenerator(name = "id_seq", sequenceName = "brand_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "id_seq")
     private int id;
 
     @Column(name = "name")

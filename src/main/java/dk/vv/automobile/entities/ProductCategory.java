@@ -1,15 +1,14 @@
 package dk.vv.automobile.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "product_category")
 public class ProductCategory {
 
     @Id
+    @SequenceGenerator(name = "id_seq", sequenceName = "product_category_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "id_seq")
     private int id;
 
     @Column(name = "name")

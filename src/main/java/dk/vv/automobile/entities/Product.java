@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 public class Product {
 
     @Id
+    @SequenceGenerator(name = "id_seq", sequenceName = "product_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "id_seq")
     private int id;
 
     @Column(name = "name")

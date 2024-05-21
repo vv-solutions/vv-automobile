@@ -1,7 +1,9 @@
 package dk.vv.automobile;
 
+import dk.vv.automobile.entities.Order;
 import dk.vv.automobile.facades.BrandFacade;
 import dk.vv.automobile.facades.CategoryFacade;
+import dk.vv.automobile.facades.OrderFacade;
 import dk.vv.automobile.facades.ProductFacade;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
@@ -27,6 +29,11 @@ public class Producers {
     @Produces
     CategoryFacade getCategoryFacade(){
         return new CategoryFacade(entityManager,entityManager);
+    }
+
+    @Produces
+    OrderFacade getOrderFacade(){
+        return new OrderFacade(entityManager,entityManager);
     }
 
 }

@@ -1,33 +1,32 @@
-package dk.vv.automobile.entities;
-import jakarta.persistence.*;
+package dk.vv.automobile.dtos;
+
+import dk.vv.automobile.entities.Order;
+import dk.vv.automobile.entities.OrderLine;
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "order_line")
-
-public class OrderLine {
-
-    @Id
-    @SequenceGenerator(name = "id_seq", sequenceName = "order_line_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "id_seq")
+public class OrderLineDTO {
     int id;
-
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
-
-    @Column(name = "product_id")
     private int productId;
-
-    @Column(name = "quantity")
     private int quantity;
-
-    @Column(name = "line_price")
     private BigDecimal linePrice;
-
-    @Column(name = "unit_price")
     private BigDecimal unitPrice;
 
+
+    public OrderLineDTO() {
+    }
+
+    public OrderLineDTO(OrderLine orderLine) {
+        this.id = orderLine.getId();
+        this.productId = orderLine.getProductId();
+        this.quantity = orderLine.getQuantity();
+        this.linePrice = orderLine.getLinePrice();
+        this.unitPrice = orderLine.getUnitPrice();
+    }
 
     public int getId() {
         return id;
@@ -37,13 +36,6 @@ public class OrderLine {
         this.id = id;
     }
 
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
 
     public int getProductId() {
         return productId;
