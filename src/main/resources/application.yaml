@@ -1,4 +1,9 @@
 quarkus:
+  neo4j:
+    uri: bolt://localhost:7687
+    authentication:
+      username: neo4j
+      password: mysecretpassword
   http:
   #    port: 8082
   smallrye-openapi:

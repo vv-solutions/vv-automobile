@@ -38,10 +38,15 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-resteasy-jackson</artifactId>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.quarkiverse.neo4j</groupId>-->
+<!--            <artifactId>quarkus-neo4j</artifactId>-->
+<!--            <version>4.0.0</version>-->
+<!--        </dependency>-->
         <dependency>
-            <groupId>io.quarkiverse.neo4j</groupId>
-            <artifactId>quarkus-neo4j</artifactId>
-            <version>4.0.0</version>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-ogm-quarkus</artifactId>
+            <version>3.8.0</version>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>

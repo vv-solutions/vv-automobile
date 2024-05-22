@@ -1,14 +1,13 @@
 package dk.vv.automobile;
 
 import dk.vv.automobile.entities.Order;
-import dk.vv.automobile.facades.BrandFacade;
-import dk.vv.automobile.facades.CategoryFacade;
-import dk.vv.automobile.facades.OrderFacade;
-import dk.vv.automobile.facades.ProductFacade;
+import dk.vv.automobile.facades.*;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import org.neo4j.ogm.session.SessionFactory;
+
 @ApplicationScoped
 public class Producers {
 
@@ -34,6 +33,14 @@ public class Producers {
     @Produces
     OrderFacade getOrderFacade(){
         return new OrderFacade(entityManager,entityManager);
+    }
+
+    @Inject
+    SessionFactory sessionFactory;
+
+    @Produces
+    ReviewFacade getReviewFacade(){
+        return  new ReviewFacade(sessionFactory);
     }
 
 }

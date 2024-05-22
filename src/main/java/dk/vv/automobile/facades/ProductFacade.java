@@ -77,4 +77,11 @@ public class ProductFacade {
                     .setParameter("search","%"+search.toLowerCase()+"%")
                     .getResultList();
         }
+
+        public List<ProductDTO> getProductsByIds(List<Integer> ids){
+        return slaveEntityManager.createQuery("SELECT new dk.vv.automobile.dtos.ProductDTO(p) from Product p " +
+                "where p.id in :ids",ProductDTO.class)
+                .setParameter("ids",ids)
+                .getResultList();
+        }
 }
