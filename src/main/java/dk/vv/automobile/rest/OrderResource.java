@@ -2,6 +2,7 @@ package dk.vv.automobile.rest;
 
 import dk.vv.automobile.dtos.BrandDTO;
 import dk.vv.automobile.dtos.OrderDTO;
+import dk.vv.automobile.dtos.ProductDTO;
 import dk.vv.automobile.facades.BrandFacade;
 import dk.vv.automobile.facades.OrderFacade;
 import jakarta.annotation.Resource;
@@ -31,5 +32,11 @@ public class OrderResource {
     @Transactional
     public OrderDTO createOrder(OrderDTO orderDTO){
         return orderFacade.createOrder(orderDTO);
+    }
+
+    @GET
+    @Path("/all")
+    public List<OrderDTO> getAll(){
+        return orderFacade.getAll();
     }
 }

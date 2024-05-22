@@ -1,5 +1,6 @@
 package dk.vv.automobile.facades;
 
+import dk.vv.automobile.dtos.ProductCategoryDTO;
 import dk.vv.automobile.dtos.ProductDTO;
 import dk.vv.automobile.entities.Product;
 import jakarta.inject.Inject;
@@ -84,4 +85,9 @@ public class ProductFacade {
                 .setParameter("ids",ids)
                 .getResultList();
         }
+
+
+    public List<ProductDTO> getAll(){
+        return slaveEntityManager.createQuery("Select new dk.vv.automobile.dtos.ProductDTO(p) from Product p", ProductDTO.class).getResultList();
+    }
 }

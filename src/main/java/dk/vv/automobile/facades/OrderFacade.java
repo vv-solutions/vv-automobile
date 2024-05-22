@@ -3,6 +3,7 @@ package dk.vv.automobile.facades;
 import dk.vv.automobile.dtos.BrandDTO;
 import dk.vv.automobile.dtos.OrderDTO;
 import dk.vv.automobile.dtos.OrderLineDTO;
+import dk.vv.automobile.dtos.ProductDTO;
 import dk.vv.automobile.entities.Brand;
 import dk.vv.automobile.entities.Order;
 import dk.vv.automobile.entities.OrderLine;
@@ -75,6 +76,9 @@ public class OrderFacade {
         masterEntityManager.refresh(order);
 
         return new OrderDTO(order);
+    }
+    public List<OrderDTO> getAll(){
+        return slaveEntityManager.createQuery("Select new dk.vv.automobile.dtos.OrderDTO(o) from Order o", OrderDTO.class).getResultList();
     }
 
 }

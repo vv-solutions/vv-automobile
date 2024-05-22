@@ -1,5 +1,6 @@
 package dk.vv.automobile.rest;
 
+import dk.vv.automobile.dtos.ProductCategoryDTO;
 import dk.vv.automobile.dtos.ProductDTO;
 import dk.vv.automobile.facades.ProductFacade;
 import jakarta.annotation.Resource;
@@ -47,4 +48,10 @@ public class ProductResource {
     public List<ProductDTO> getPopularProducts(@PathParam("count") int count){
         return productFacade.getPopularProducts(count);
     }
+    @GET
+    @Path("/all")
+    public List<ProductDTO> getAll(){
+        return productFacade.getAll();
+    }
+
 }
