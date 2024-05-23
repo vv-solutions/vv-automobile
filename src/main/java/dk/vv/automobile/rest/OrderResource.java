@@ -35,15 +35,21 @@ public class OrderResource {
     }
 
     @GET
-    @Path("/all")
-    public List<OrderDTO> getAll(){
-        return orderFacade.getAll();
+    @Path("/all/{count}/{page}")
+    public List<OrderDTO> getAll(@PathParam("count") int count, @PathParam("page") int page){
+        return orderFacade.getAll(count,page);
     }
 
     @GET
     @Path("/{id}")
     public OrderDTO getAll(@PathParam("id") int id){
         return orderFacade.getOrderById(id);
+    }
+
+    @GET
+    @Path("/search")
+    public List<OrderDTO> searchProducts(@QueryParam("query") String search){
+        return orderFacade.searchOrders(search);
     }
 
 }

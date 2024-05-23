@@ -52,9 +52,9 @@ public class ProductResource {
         return productFacade.getPopularProducts(count);
     }
     @GET
-    @Path("/all")
-    public List<ProductDTO> getAll(){
-        return productFacade.getAll();
+    @Path("/all/{count}/{page}")
+    public List<ProductDTO> getAll(@PathParam("count") int count, @PathParam("page") int page){
+        return productFacade.getAll(count,page);
     }
 
 

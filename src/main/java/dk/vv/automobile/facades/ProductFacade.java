@@ -72,7 +72,6 @@ public class ProductFacade {
 
 
         public List<ProductDTO> searchProducts(String search){
-            System.out.println(search);
             return slaveEntityManager.createQuery("Select new dk.vv.automobile.dtos.ProductDTO(p) from Product  p " +
                     "join Brand b on p.brandId = b.id" +
                     " where lower(p.name) LIKE :search or lower(p.description) like :search or lower(b.name) like :search", ProductDTO.class)
@@ -88,8 +87,11 @@ public class ProductFacade {
         }
 
 
-    public List<ProductDTO> getAll(){
-        return slaveEntityManager.createQuery("Select new dk.vv.automobile.dtos.ProductDTO(p) from Product p", ProductDTO.class).getResultList();
+    public List<ProductDTO> getAll(int count, int page){
+        return slaveEntityManager.createQuery("Select new dk.vv.automobile.dtos.ProductDTO(p) from Product p order by p.id asc", ProductDTO.class)
+                .setMaxResults(count)
+                .setFirstResult(page*count)
+                .getResultList();
     }
 
     public ProductDTO updateProduct(ProductDTO productDTO){

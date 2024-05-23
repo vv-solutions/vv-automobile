@@ -77,13 +77,23 @@ public class OrderFacade {
 
         return new OrderDTO(order);
     }
-    public List<OrderDTO> getAll(){
-        return slaveEntityManager.createQuery("Select new dk.vv.automobile.dtos.OrderDTO(o) from Order o", OrderDTO.class).getResultList();
+    public List<OrderDTO> getAll(int count, int page){
+        return slaveEntityManager.createQuery("Select new dk.vv.automobile.dtos.OrderDTO(o) from Order o order by id desc", OrderDTO.class)
+                .setMaxResults(count)
+                .setFirstResult(count*page)
+                .getResultList();
     }
 
 
     public OrderDTO getOrderById(int id){
         return new OrderDTO(slaveEntityManager.find(Order.class,id));
+    }
+
+    public List<OrderDTO> searchOrders(String search){
+        return slaveEntityManager.createQuery("Select new dk.vv.automobile.dtos.OrderDTO(o) from Order o " +
+                        " where lower(o.email) LIKE :search or lower(o.phone) like :search or lower(str(o.id)) like :search", OrderDTO.class)
+                .setParameter("search","%"+search.toLowerCase()+"%")
+                .getResultList();
     }
 
 }
