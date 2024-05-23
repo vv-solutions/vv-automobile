@@ -27,4 +27,15 @@ public class BrandFacade {
         return slaveEntityManager.createQuery("Select new dk.vv.automobile.dtos.BrandDTO(b) from Brand b", BrandDTO.class).getResultList();
     }
 
+    public BrandDTO updateBrand(BrandDTO brandDTO){
+        var toUpdate = masterEntityManager.find(Brand.class,brandDTO.getId());
+
+        toUpdate.setDescription(brandDTO.getDescription());
+        toUpdate.setName(brandDTO.getName());
+
+        masterEntityManager.merge(toUpdate);
+
+        return new BrandDTO(toUpdate);
+    }
+
 }

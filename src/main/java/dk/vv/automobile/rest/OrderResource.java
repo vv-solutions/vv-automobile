@@ -39,4 +39,11 @@ public class OrderResource {
     public List<OrderDTO> getAll(){
         return orderFacade.getAll();
     }
+
+    @GET
+    @Path("/{id}")
+    public OrderDTO getAll(@PathParam("id") int id){
+        return orderFacade.getOrderById(id);
+    }
+
 }

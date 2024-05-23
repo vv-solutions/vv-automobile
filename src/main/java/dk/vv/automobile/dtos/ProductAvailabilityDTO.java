@@ -18,6 +18,11 @@ public class ProductAvailabilityDTO {
         this.product = new ProductDTO(productAvailability.getProduct());
     }
 
+    public ProductAvailabilityDTO(int id, int quantity){
+        this.id = id;
+        this.quantity = quantity;
+    }
+
     public int getId() {
         return id;
     }
@@ -32,5 +37,13 @@ public class ProductAvailabilityDTO {
 
     public void setProduct(ProductDTO product) {
         this.product = product;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

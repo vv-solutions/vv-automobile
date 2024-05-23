@@ -14,6 +14,9 @@ public class ProductCategoryDTO {
         this.name = productCategory.getName();
     }
 
+    public ProductCategoryDTO() {
+    }
+
     public int getId() {
         return id;
     }

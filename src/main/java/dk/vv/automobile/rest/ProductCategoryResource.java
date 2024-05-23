@@ -7,6 +7,7 @@ import dk.vv.automobile.facades.CategoryFacade;
 import jakarta.annotation.Resource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 
 import java.util.List;
@@ -36,6 +37,13 @@ public class ProductCategoryResource {
     @Path("/all")
     public List<ProductCategoryDTO> getAll(){
         return categoryFacade.getAll();
+    }
+
+    @PUT
+    @Path("/")
+    @Transactional
+    public ProductCategoryDTO update(ProductCategoryDTO productCategoryDTO){
+        return categoryFacade.update(productCategoryDTO);
     }
 
 

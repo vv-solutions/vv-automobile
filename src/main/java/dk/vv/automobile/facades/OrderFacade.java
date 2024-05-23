@@ -35,7 +35,7 @@ public class OrderFacade {
 
         List<Integer> productIds = orderDTO.getOrderLines().stream().map(OrderLineDTO::getProductId).toList();
 
-        List<Product> products = slaveEntityManager.createQuery("select p from Product p where p.id in :pids",Product.class)
+        List<Product> products = masterEntityManager.createQuery("select p from Product p where p.id in :pids",Product.class)
                 .setParameter("pids",productIds)
                 .getResultList();
 
@@ -79,6 +79,11 @@ public class OrderFacade {
     }
     public List<OrderDTO> getAll(){
         return slaveEntityManager.createQuery("Select new dk.vv.automobile.dtos.OrderDTO(o) from Order o", OrderDTO.class).getResultList();
+    }
+
+
+    public OrderDTO getOrderById(int id){
+        return new OrderDTO(slaveEntityManager.find(Order.class,id));
     }
 
 }

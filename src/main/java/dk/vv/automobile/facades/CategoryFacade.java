@@ -29,4 +29,14 @@ public class CategoryFacade {
         return slaveEntityManager.createQuery("Select new dk.vv.automobile.dtos.ProductCategoryDTO(pc) from ProductCategory pc", ProductCategoryDTO.class).getResultList();
     }
 
+
+
+    public ProductCategoryDTO update(ProductCategoryDTO productCategoryDTO){
+        var productCategory= masterEntityManager.find(ProductCategory.class,productCategoryDTO.getId());
+        productCategory.setName(productCategoryDTO.getName());
+
+        masterEntityManager.merge(productCategory);
+
+        return new ProductCategoryDTO(productCategory);
+    }
 }

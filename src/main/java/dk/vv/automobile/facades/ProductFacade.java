@@ -1,5 +1,6 @@
 package dk.vv.automobile.facades;
 
+import dk.vv.automobile.dtos.ProductAvailabilityDTO;
 import dk.vv.automobile.dtos.ProductCategoryDTO;
 import dk.vv.automobile.dtos.ProductDTO;
 import dk.vv.automobile.entities.Product;
@@ -89,5 +90,27 @@ public class ProductFacade {
 
     public List<ProductDTO> getAll(){
         return slaveEntityManager.createQuery("Select new dk.vv.automobile.dtos.ProductDTO(p) from Product p", ProductDTO.class).getResultList();
+    }
+
+    public ProductDTO updateProduct(ProductDTO productDTO){
+        var toUpdate = masterEntityManager.find(Product.class,productDTO.getId());
+
+        toUpdate.setBrandId(productDTO.getBrandId());
+        toUpdate.setName(productDTO.getName());
+        toUpdate.setCategoryId(productDTO.getCategoryId());
+        toUpdate.setDescription(productDTO.getDescription());
+        toUpdate.setImgUrl(productDTO.getImgUrl());
+        toUpdate.setPrice(productDTO.getPrice());
+
+        masterEntityManager.merge(toUpdate);
+
+        return new ProductDTO(toUpdate);
+    }
+
+    public ProductAvailabilityDTO getProductAvailability(int productId){
+        return slaveEntityManager.createQuery("SELECT new dk.vv.automobile.dtos.ProductAvailabilityDTO(p.id,p.quantity) from ProductAvailability p " +
+                "where p.product.id = :productId",ProductAvailabilityDTO.class)
+                .setParameter("productId",productId)
+                .getSingleResult();
     }
 }

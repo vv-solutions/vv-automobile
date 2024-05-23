@@ -37,6 +37,9 @@ public class ProductDTO {
         this.createTimestamp = product.getCreateTimestamp();
     }
 
+    public ProductDTO() {
+    }
+
     public int getId() {
         return id;
     }

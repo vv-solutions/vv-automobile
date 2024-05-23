@@ -1,6 +1,7 @@
 package dk.vv.automobile.rest;
 
 import dk.vv.automobile.dtos.BrandDTO;
+import dk.vv.automobile.dtos.ProductCategoryDTO;
 import dk.vv.automobile.dtos.ProductDTO;
 import dk.vv.automobile.facades.BrandFacade;
 import dk.vv.automobile.facades.ProductFacade;
@@ -8,6 +9,7 @@ import jakarta.activation.MimeType;
 import jakarta.annotation.Resource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 
 import java.util.List;
@@ -39,5 +41,13 @@ public class BrandResource {
         return brandFacade.getAllBrands();
     }
 
+
+
+    @PUT
+    @Path("/")
+    @Transactional
+    public BrandDTO update(BrandDTO brandDTO){
+        return brandFacade.updateBrand(brandDTO);
+    }
 
 }

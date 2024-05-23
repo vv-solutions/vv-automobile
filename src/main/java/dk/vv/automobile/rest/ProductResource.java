@@ -1,11 +1,14 @@
 package dk.vv.automobile.rest;
 
+import dk.vv.automobile.dtos.BrandDTO;
+import dk.vv.automobile.dtos.ProductAvailabilityDTO;
 import dk.vv.automobile.dtos.ProductCategoryDTO;
 import dk.vv.automobile.dtos.ProductDTO;
 import dk.vv.automobile.facades.ProductFacade;
 import jakarta.annotation.Resource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 
 import java.util.List;
@@ -52,6 +55,20 @@ public class ProductResource {
     @Path("/all")
     public List<ProductDTO> getAll(){
         return productFacade.getAll();
+    }
+
+
+    @PUT
+    @Path("/")
+    @Transactional
+    public ProductDTO update(ProductDTO productDTO){
+        return productFacade.updateProduct(productDTO);
+    }
+
+    @GET
+    @Path("/availability/{productId}")
+    public ProductAvailabilityDTO getProductAvailability(@PathParam("productId") int productId){
+        return productFacade.getProductAvailability(productId);
     }
 
 }
