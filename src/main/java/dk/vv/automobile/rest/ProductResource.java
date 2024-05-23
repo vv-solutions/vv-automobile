@@ -71,4 +71,11 @@ public class ProductResource {
         return productFacade.getProductAvailability(productId);
     }
 
+    @POST
+    @Transactional
+    public ProductDTO create(ProductDTO productDTO){
+        return productFacade.createProduct(productDTO);
+    }
+
+
 }

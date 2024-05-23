@@ -20,6 +20,11 @@ public class ProductAvailability {
 
     public ProductAvailability() {
     }
+    public ProductAvailability(Product product, int quantity) {
+        this.product = product;
+        this.quantity = quantity;
+    }
+
 
     public int getId() {
         return id;

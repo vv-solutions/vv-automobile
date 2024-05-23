@@ -45,6 +45,11 @@ public class ProductCategoryResource {
     public ProductCategoryDTO update(ProductCategoryDTO productCategoryDTO){
         return categoryFacade.update(productCategoryDTO);
     }
+    @POST
+    @Transactional
+    public ProductCategoryDTO create(ProductCategoryDTO productCategoryDTO){
+        return categoryFacade.create(productCategoryDTO);
+    }
 
 
 }

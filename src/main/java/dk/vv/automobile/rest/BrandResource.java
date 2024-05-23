@@ -1,6 +1,7 @@
 package dk.vv.automobile.rest;
 
 import dk.vv.automobile.dtos.BrandDTO;
+import dk.vv.automobile.dtos.OrderDTO;
 import dk.vv.automobile.dtos.ProductCategoryDTO;
 import dk.vv.automobile.dtos.ProductDTO;
 import dk.vv.automobile.facades.BrandFacade;
@@ -48,6 +49,12 @@ public class BrandResource {
     @Transactional
     public BrandDTO update(BrandDTO brandDTO){
         return brandFacade.updateBrand(brandDTO);
+    }
+
+    @POST
+    @Transactional
+    public BrandDTO create(BrandDTO brandDTO){
+        return brandFacade.createBrand(brandDTO);
     }
 
 }
