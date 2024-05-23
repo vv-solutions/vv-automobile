@@ -1,5 +1,6 @@
 package dk.vv.automobile.entities;
 
+import dk.vv.automobile.dtos.ProductCategoryDTO;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +16,10 @@ public class ProductCategory {
     private String name;
 
     public ProductCategory() {
+    }
+
+    public ProductCategory(ProductCategoryDTO productCategoryDTO) {
+        this.name = productCategoryDTO.getName();
     }
 
     public ProductCategory(int id) {

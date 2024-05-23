@@ -1,5 +1,6 @@
 package dk.vv.automobile.entities;
 
+import dk.vv.automobile.dtos.BrandDTO;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -20,6 +21,11 @@ public class Brand {
     private String description;
 
     public Brand() {
+    }
+
+    public Brand(BrandDTO brandDTO) {
+        this.name = brandDTO.getName();
+        this.description = brandDTO.getDescription();
     }
 
     public int getId() {

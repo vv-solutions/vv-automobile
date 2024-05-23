@@ -1,6 +1,8 @@
 package dk.vv.automobile.entities;
 
+import dk.vv.automobile.dtos.ProductDTO;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -32,13 +34,23 @@ public class Product {
     @Column(name = "category_id")
     private int categoryId;
 
-    @OneToOne(mappedBy = "product")
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     private ProductAvailability productAvailability;
 
     @Column(name = "create_timestamp")
+    @CreationTimestamp
     private LocalDateTime createTimestamp;
 
     public Product() {
+    }
+
+    public Product(ProductDTO productDTO) {
+        this.name = productDTO.getName();
+        this.brandId = productDTO.getBrandId();
+        this.price = productDTO.getPrice();
+        this.description = productDTO.getDescription();
+        this.imgUrl = productDTO.getImgUrl();
+        this.categoryId = productDTO.getCategoryId();
     }
 
     public int getId() {
@@ -103,6 +115,9 @@ public class Product {
 
     public void setProductAvailability(ProductAvailability productAvailability) {
         this.productAvailability = productAvailability;
+        if (productAvailability != null) {
+            productAvailability.setProduct(this);
+        }
     }
 
     public LocalDateTime getCreateTimestamp() {

@@ -1,9 +1,12 @@
 package dk.vv.automobile.facades;
 
+import dk.vv.automobile.dtos.BrandDTO;
 import dk.vv.automobile.dtos.ProductAvailabilityDTO;
 import dk.vv.automobile.dtos.ProductCategoryDTO;
 import dk.vv.automobile.dtos.ProductDTO;
+import dk.vv.automobile.entities.Brand;
 import dk.vv.automobile.entities.Product;
+import dk.vv.automobile.entities.ProductAvailability;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -112,5 +115,17 @@ public class ProductFacade {
                 "where p.product.id = :productId",ProductAvailabilityDTO.class)
                 .setParameter("productId",productId)
                 .getSingleResult();
+    }
+
+    public ProductDTO createProduct(ProductDTO productDTO) {
+        Product product = new Product(productDTO);
+        product.setProductAvailability(new ProductAvailability(product,0));
+
+        masterEntityManager.persist(product);
+
+        masterEntityManager.flush();
+        masterEntityManager.refresh(product);
+
+        return new ProductDTO(product);
     }
 }
