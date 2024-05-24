@@ -4,6 +4,7 @@ import dk.vv.automobile.dtos.BrandDTO;
 import dk.vv.automobile.dtos.ProductAvailabilityDTO;
 import dk.vv.automobile.dtos.ProductCategoryDTO;
 import dk.vv.automobile.dtos.ProductDTO;
+import dk.vv.automobile.entities.Product;
 import dk.vv.automobile.facades.ProductFacade;
 import jakarta.annotation.Resource;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -78,4 +79,10 @@ public class ProductResource {
     }
 
 
+
+    @GET
+    @Path("list")
+    public List<ProductDTO> getProductsByIds(@QueryParam("id")List<Integer> ids){
+        return productFacade.getProductsByIds(ids);
+    }
 }
