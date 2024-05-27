@@ -26,6 +26,6 @@ if __name__ == '__main__':
     if(args.km):
         car_dict['Kilometers'] = args.km
 
-    predicted_price = predictor.get_prediction("src/main/resources/python//rf_pipeline.pkl", car_dict)
+    predicted_price = predictor.get_prediction("src/main/resources/python/model.pkl", car_dict)
     print(" ")
     print(predicted_price[0])
