@@ -38,7 +38,6 @@ public class PredictionFacade {
         while ((line = stdInput.readLine()) != null) {
             pred = line;
         }
-        System.out.println("done");
         return new BigDecimal(pred);
     }
 }
