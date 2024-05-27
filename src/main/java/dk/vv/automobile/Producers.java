@@ -43,4 +43,9 @@ public class Producers {
         return  new ReviewFacade(sessionFactory);
     }
 
+
+    @Produces
+    PredictionFacade getPredictionFacade(){
+        return new PredictionFacade();
+    }
 }
