@@ -85,4 +85,10 @@ public class ProductResource {
     public List<ProductDTO> getProductsByIds(@QueryParam("id")List<Integer> ids){
         return productFacade.getProductsByIds(ids);
     }
+
+    @PUT
+    @Path("/updateAvailability")
+    public ProductAvailabilityDTO updateAvailability(ProductAvailabilityDTO productAvailabilityDTO){
+        return productFacade.increaseProductAvailability(productAvailabilityDTO);
+    }
 }

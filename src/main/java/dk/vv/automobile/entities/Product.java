@@ -1,8 +1,11 @@
 package dk.vv.automobile.entities;
 
 import dk.vv.automobile.dtos.ProductDTO;
+import dk.vv.automobile.entities.types.ProductQuantityPair;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,6 +18,7 @@ public class Product {
     @SequenceGenerator(name = "id_seq", sequenceName = "product_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "id_seq")
     private int id;
+
 
     @Column(name = "name")
     private String name;

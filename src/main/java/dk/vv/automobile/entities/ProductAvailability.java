@@ -1,5 +1,6 @@
 package dk.vv.automobile.entities;
 
+import dk.vv.automobile.entities.types.ProductQuantityPair;
 import jakarta.persistence.*;
 
 @Table(name = "product_availability")

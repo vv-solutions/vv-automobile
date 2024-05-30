@@ -1,18 +1,24 @@
 package dk.vv.automobile.facades;
 
-import dk.vv.automobile.dtos.BrandDTO;
 import dk.vv.automobile.dtos.ProductAvailabilityDTO;
-import dk.vv.automobile.dtos.ProductCategoryDTO;
 import dk.vv.automobile.dtos.ProductDTO;
-import dk.vv.automobile.entities.Brand;
 import dk.vv.automobile.entities.Product;
 import dk.vv.automobile.entities.ProductAvailability;
+import dk.vv.automobile.entities.types.ProductQuantityPair;
+import dk.vv.automobile.entities.types.ProductQuantityPairArrayType;
+import dk.vv.automobile.errorhandling.ProductQuantityException;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
+import org.hibernate.Session;
+import org.hibernate.exception.GenericJDBCException;
+import org.hibernate.jdbc.Work;
+import org.postgresql.util.PGbytea;
+import org.postgresql.util.PGobject;
+import org.postgresql.util.PSQLException;
 
+import java.sql.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductFacade {
 
@@ -130,4 +136,49 @@ public class ProductFacade {
 
         return new ProductDTO(product);
     }
+
+
+        public void decreaseProductAvailability(List<ProductQuantityPair> pairs) throws ProductQuantityException {
+            StringBuilder queryBuilder = new StringBuilder();
+
+            queryBuilder.append("SELECT shop.decrease_product_availability(ARRAY[");
+
+            for (int i = 0; i < pairs.size(); i++) {
+                ProductQuantityPair pair = pairs.get(i);
+                queryBuilder.append("(")
+                        .append(pair.getProductId())
+                        .append(", ")
+                        .append(pair.getQuantity())
+                        .append(")::shop.product_quantity_pair");
+
+                if (i < pairs.size() - 1) {
+                    queryBuilder.append(", ");
+                }
+            }
+
+            queryBuilder.append("]);");
+
+            String query = queryBuilder.toString();
+
+            String result = (String) masterEntityManager.createNativeQuery(query).getSingleResult();
+
+            if(!result.equalsIgnoreCase("ok")){
+                throw new ProductQuantityException(result);
+            }
+
+
+        }
+
+        public ProductAvailabilityDTO increaseProductAvailability(ProductAvailabilityDTO productAvailabilityDTO){
+            System.out.println(productAvailabilityDTO.getQuantity());
+            var query = masterEntityManager.createNativeQuery("SELECT shop.update_product_availability(:productId, :quantity)");
+            query.setParameter("productId", productAvailabilityDTO.getProduct().getId());
+            query.setParameter("quantity", productAvailabilityDTO.getQuantity());
+
+            int newQuantity = (int) query.getSingleResult();
+
+            productAvailabilityDTO.setQuantity(newQuantity);
+
+            return productAvailabilityDTO;
+        }
 }
