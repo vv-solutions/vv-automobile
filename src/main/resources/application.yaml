@@ -19,8 +19,14 @@ quarkus:
     db-kind: postgresql
     jdbc:
       url: jdbc:postgresql://localhost:5432/automobile?currentSchema=shop
-    username: postgres
-    password: mysecretpassword
+    username: masteruser
+    password: masterpassword
+    slave:
+      db-kind: postgresql
+      jdbc:
+        url: jdbc:postgresql://localhost:5433/automobile?currentSchema=shop
+      username: slaveuser
+      password: slavepassword
 
     transaction-manager:
       default-transaction-timeout: 300s

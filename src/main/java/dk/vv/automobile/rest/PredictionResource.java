@@ -43,6 +43,5 @@ public class PredictionResource {
         }
 
         return predictionFacade.getPricePrediction(path,numberplate,km);
-//        return BigDecimal.ZERO;
     }
 }
