@@ -11,6 +11,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
@@ -83,12 +84,20 @@ public class ProductResource {
     @GET
     @Path("list")
     public List<ProductDTO> getProductsByIds(@QueryParam("id")List<Integer> ids){
-        return productFacade.getProductsByIds(ids);
+        return productFacade.getAllProductsByIds(ids);
     }
 
     @PUT
     @Path("/updateAvailability")
     public ProductAvailabilityDTO updateAvailability(ProductAvailabilityDTO productAvailabilityDTO){
         return productFacade.increaseProductAvailability(productAvailabilityDTO);
+    }
+
+    @PUT
+    @Path("/delete/{productId}")
+    @Transactional
+    public Response deleteProduct(@PathParam("productId") int id){
+        productFacade.deleteProduct(id);
+        return Response.ok().build();
     }
 }

@@ -13,4 +13,9 @@ public class ExceptionMappers {
         return RestResponse.status(Response.Status.BAD_REQUEST, productQuantityException);
 
     }
+
+    @ServerExceptionMapper
+    public RestResponse<ProductInactiveException> mapNotFoundException(ProductInactiveException productInactiveException) {
+        return RestResponse.status(Response.Status.BAD_REQUEST, productInactiveException);
+    }
 }

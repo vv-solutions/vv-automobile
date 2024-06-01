@@ -42,7 +42,7 @@ public class ProductFacade {
             if(orderBy.equalsIgnoreCase("popularity")){
                 queryBuilder.append(" join ProductPopularity  pp on p.id = pp.productId");
             }
-            queryBuilder.append(" where p.categoryId = :categoryId");
+            queryBuilder.append(" where p.categoryId = :categoryId and p.isActive = true");
 
             if(brands != null && !brands.isEmpty()){
                 queryBuilder.append(" and p.brandId in :brands");
@@ -75,7 +75,8 @@ public class ProductFacade {
 
         public List<ProductDTO> getPopularProducts(int count){
             return slaveEntityManager.createQuery("select new dk.vv.automobile.dtos.ProductDTO(p) from Product p " +
-                    " join ProductPopularity pp on pp.productId = p.id " +
+                    "join ProductPopularity pp on pp.productId = p.id " +
+                    "where p.isActive = true " +
                     "order by pp.purchaseCount desc", ProductDTO.class).setMaxResults(count).getResultList();
         }
 
@@ -83,21 +84,28 @@ public class ProductFacade {
         public List<ProductDTO> searchProducts(String search){
             return slaveEntityManager.createQuery("Select new dk.vv.automobile.dtos.ProductDTO(p) from Product  p " +
                     "join Brand b on p.brandId = b.id" +
-                    " where lower(p.name) LIKE :search or lower(p.description) like :search or lower(b.name) like :search", ProductDTO.class)
+                    " where p.isActive = true and (lower(p.name) LIKE :search or lower(p.description) like :search or lower(b.name) like :search)", ProductDTO.class)
                     .setParameter("search","%"+search.toLowerCase()+"%")
                     .getResultList();
         }
 
-        public List<ProductDTO> getProductsByIds(List<Integer> ids){
+        public List<ProductDTO> getAllProductsByIds(List<Integer> ids){
         return slaveEntityManager.createQuery("SELECT new dk.vv.automobile.dtos.ProductDTO(p) from Product p " +
                 "where p.id in :ids",ProductDTO.class)
                 .setParameter("ids",ids)
                 .getResultList();
         }
 
+    public List<ProductDTO> getActiveProductsByIds(List<Integer> ids){
+        return slaveEntityManager.createQuery("SELECT new dk.vv.automobile.dtos.ProductDTO(p) from Product p " +
+                        "where p.id in :ids and p.isActive = true",ProductDTO.class)
+                .setParameter("ids",ids)
+                .getResultList();
+    }
+
 
     public List<ProductDTO> getAll(int count, int page){
-        return slaveEntityManager.createQuery("Select new dk.vv.automobile.dtos.ProductDTO(p) from Product p order by p.id asc", ProductDTO.class)
+        return slaveEntityManager.createQuery("Select new dk.vv.automobile.dtos.ProductDTO(p) from Product p where p.isActive = true order by p.id asc", ProductDTO.class)
                 .setMaxResults(count)
                 .setFirstResult(page*count)
                 .getResultList();
@@ -180,5 +188,12 @@ public class ProductFacade {
             productAvailabilityDTO.setQuantity(newQuantity);
 
             return productAvailabilityDTO;
+        }
+
+        public void deleteProduct(int id){
+            var product = masterEntityManager.find(Product.class,id);
+
+            product.setActive(false);
+            masterEntityManager.merge(product);
         }
 }

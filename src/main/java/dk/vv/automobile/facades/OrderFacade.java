@@ -8,6 +8,7 @@ import dk.vv.automobile.entities.Brand;
 import dk.vv.automobile.entities.Order;
 import dk.vv.automobile.entities.OrderLine;
 import dk.vv.automobile.entities.Product;
+import dk.vv.automobile.errorhandling.ProductInactiveException;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 
@@ -28,7 +29,7 @@ public class OrderFacade {
     }
 
 
-    public OrderDTO createOrder(OrderDTO orderDTO){
+    public OrderDTO createOrder(OrderDTO orderDTO) throws ProductInactiveException {
 
         Order order = new Order(orderDTO);
 
@@ -39,6 +40,11 @@ public class OrderFacade {
                 .setParameter("pids",productIds)
                 .getResultList();
 
+        for (Product product : products) {
+            if(!product.isActive()){
+                throw new ProductInactiveException(String.format("Product with product no. [%d], is no longer available",product.getId()));
+            }
+        }
 
         BigDecimal totalPrice = BigDecimal.ZERO;
 

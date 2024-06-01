@@ -45,6 +45,9 @@ public class Product {
     @CreationTimestamp
     private LocalDateTime createTimestamp;
 
+    @Column(name = "is_active")
+    private boolean isActive;
+
     public Product() {
     }
 
@@ -130,5 +133,13 @@ public class Product {
 
     public void setCreateTimestamp(LocalDateTime createTimestamp) {
         this.createTimestamp = createTimestamp;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }

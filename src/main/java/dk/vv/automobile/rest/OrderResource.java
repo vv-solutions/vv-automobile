@@ -2,6 +2,7 @@ package dk.vv.automobile.rest;
 
 import dk.vv.automobile.dtos.OrderDTO;
 import dk.vv.automobile.entities.types.ProductQuantityPair;
+import dk.vv.automobile.errorhandling.ProductInactiveException;
 import dk.vv.automobile.errorhandling.ProductQuantityException;
 import dk.vv.automobile.facades.OrderFacade;
 import dk.vv.automobile.facades.ProductFacade;
@@ -34,7 +35,7 @@ public class OrderResource {
 
     @POST
     @Transactional
-    public OrderDTO createOrder(OrderDTO orderDTO) throws ProductQuantityException {
+    public OrderDTO createOrder(OrderDTO orderDTO) throws ProductQuantityException, ProductInactiveException {
 
         List<ProductQuantityPair> pairs = orderDTO.getOrderLines().stream().map(ProductQuantityPair::new).collect(Collectors.toList());
         productFacade.decreaseProductAvailability(pairs);

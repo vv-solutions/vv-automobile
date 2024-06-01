@@ -49,7 +49,7 @@ public class ReviewResource {
     @GET
     @Path("/recommended/{productId}")
     public List<ProductDTO> getRecommendedProducts(@PathParam("productId") int productId){
-        return productFacade.getProductsByIds(
+        return productFacade.getActiveProductsByIds(
                 reviewFacade.recommendProducts(productId)
         );
 
