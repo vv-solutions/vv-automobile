@@ -5,7 +5,8 @@ quarkus:
       username: neo4j
       password: mysecretpassword
   http:
-      port: 8081
+    port: 8081
+    cors: true
   smallrye-openapi:
     info-title: vv-automobile
     auto-add-security-requirement: false
@@ -35,3 +36,9 @@ quarkus:
       generation: none
   devservices:
     enabled: false
+
+"%dev":
+  quarkus:
+    http:
+      cors:
+        origins: /.*/
