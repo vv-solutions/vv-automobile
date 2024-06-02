@@ -1,0 +1,32 @@
+version: '3.1'
+
+services:
+  master:
+    build:
+      context: ./master
+    environment:
+      POSTGRES_USER: masteruser
+      POSTGRES_PASSWORD: masterpassword
+      POSTGRES_DB: automobile
+    ports:
+      - "5432:5432"
+    volumes:
+      - master_data:/var/lib/postgresql/data
+
+  slave:
+    build:
+      context: ./slave
+    environment:
+      POSTGRES_USER: slaveuser
+      POSTGRES_PASSWORD: slavepassword
+      POSTGRES_DB: automobile
+    ports:
+      - "5433:5432"
+    depends_on:
+      - master
+    volumes:
+      - slave_data:/var/lib/postgresql/data
+
+volumes:
+  master_data:
+  slave_data:
