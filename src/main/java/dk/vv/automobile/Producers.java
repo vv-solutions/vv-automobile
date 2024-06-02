@@ -54,4 +54,9 @@ public class Producers {
     PredictionFacade getPredictionFacade(){
         return new PredictionFacade();
     }
+
+    @Produces
+    ChatFacade getChatFacade(){
+        return new ChatFacade();
+    }
 }
