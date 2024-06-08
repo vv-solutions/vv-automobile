@@ -18,4 +18,14 @@ public class ExceptionMappers {
     public RestResponse<ProductInactiveException> mapNotFoundException(ProductInactiveException productInactiveException) {
         return RestResponse.status(Response.Status.BAD_REQUEST, productInactiveException);
     }
+
+    @ServerExceptionMapper
+    public RestResponse<ChatException> mapChatException(ChatException chatException) {
+        return RestResponse.status(Response.Status.INTERNAL_SERVER_ERROR, chatException);
+    }
+
+    @ServerExceptionMapper
+    public RestResponse<PredictionException> mapPredictionException(PredictionException predictionException) {
+        return RestResponse.status(Response.Status.INTERNAL_SERVER_ERROR, predictionException);
+    }
 }

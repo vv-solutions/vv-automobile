@@ -1,12 +1,12 @@
 package dk.vv.automobile;
 
-import dk.vv.automobile.entities.Order;
 import dk.vv.automobile.facades.*;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceUnit;
+import org.jboss.logging.Logger;
 import org.neo4j.ogm.session.SessionFactory;
 
 @ApplicationScoped
@@ -19,6 +19,9 @@ public class Producers {
     @Inject
     @PersistenceUnit(name = "slave")
     EntityManager slaveEntityManager;
+
+    @Inject
+    Logger logger;
 
 
     @Produces
@@ -52,11 +55,11 @@ public class Producers {
 
     @Produces
     PredictionFacade getPredictionFacade(){
-        return new PredictionFacade();
+        return new PredictionFacade(logger);
     }
 
     @Produces
     ChatFacade getChatFacade(){
-        return new ChatFacade();
+        return new ChatFacade(logger);
     }
 }

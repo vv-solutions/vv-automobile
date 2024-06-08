@@ -1,6 +1,7 @@
 package dk.vv.automobile.rest;
 
 import dk.vv.automobile.dtos.ChatDTO;
+import dk.vv.automobile.errorhandling.ChatException;
 import dk.vv.automobile.facades.ChatFacade;
 import jakarta.annotation.Resource;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -30,8 +31,7 @@ public class ChatResource {
     }
 
     @POST
-    public ChatDTO askQuestion(ChatDTO chatDTO) throws IOException {
+    public ChatDTO askQuestion(ChatDTO chatDTO) throws IOException, ChatException {
         return chatFacade.askQuestion(chatDTO.getMsg());
     }
-
 }

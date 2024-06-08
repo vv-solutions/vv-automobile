@@ -1,6 +1,8 @@
 package dk.vv.automobile.rest;
 
 import dk.vv.automobile.dtos.BrandDTO;
+import dk.vv.automobile.dtos.PredictionDTO;
+import dk.vv.automobile.errorhandling.PredictionException;
 import dk.vv.automobile.facades.BrandFacade;
 import dk.vv.automobile.facades.PredictionFacade;
 import jakarta.annotation.Resource;
@@ -34,7 +36,7 @@ public class PredictionResource {
     @POST
     @Path("/")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public BigDecimal getP(@FormParam("image") File image, @FormParam("km") Integer km, @FormParam("numberplate") String numberplate) throws IOException {
+    public PredictionDTO getPrediction(@FormParam("image") File image, @FormParam("km") Integer km, @FormParam("numberplate") String numberplate) throws IOException, PredictionException {
 
         String path = null;
 

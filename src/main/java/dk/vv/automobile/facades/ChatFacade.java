@@ -1,13 +1,23 @@
 package dk.vv.automobile.facades;
 
 import dk.vv.automobile.dtos.ChatDTO;
+import dk.vv.automobile.errorhandling.ChatException;
+import org.jboss.logging.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+
 public class ChatFacade {
-    public ChatDTO askQuestion(String question) throws IOException {
+
+    private  final Logger logger;
+
+    public ChatFacade(Logger logger) {
+        this.logger = logger;
+    }
+
+    public ChatDTO askQuestion(String question) throws IOException, ChatException {
         String[] command = {
                 "python",
                 "src/main/resources/python/chat.py",
@@ -24,6 +34,13 @@ public class ChatFacade {
         while ((line = stdInput.readLine()) != null) {
             answer = line;
         }
-        return new ChatDTO(answer);
+
+        if(answer.contains("error:")){
+            logger.errorf("chat failed with message: [%s]",answer.split("error:")[1]);
+            throw new ChatException(answer.split("error:")[1]);
+        }
+
+
+        return new ChatDTO(answer.split("result:")[1]);
     }
 }
