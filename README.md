@@ -14,6 +14,12 @@ You can run this application in dev mode that enables live coding using:
 # Architecture
 ![overview.png](src%2Fmain%2Fresources%2Fimages%2Foverview.png)
 
+# Price prediction & chat:
+download the model from https://drive.google.com/drive/folders/1shmiYnNofdMsM7caX0hsP9pRL9ntM7yK and place it in src/main/resources/python.
+
+**Note** when using chat or price prediction, the python scripts in src/main/resources/python are executed. Make sure that the correct dependencies are 
+installed (see requirements here: https://github.com/vv-solutions/vv-automobile-ml) and that you can run python from the terminal. 
+
 
 # Databases
 
