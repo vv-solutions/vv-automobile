@@ -45,15 +45,17 @@ def detect_numberplate(image_src):
     
     #If ocr finds more that one text it finds out if the text have a length of 7 and clean up spaces and [] in the words
     text=""
-    if len(result)>1:
-        for item in result:
-            word=item.replace(' ', '')
-            if len(word)==7:
-                text=word
-    else:
-        text=result[0].replace(' ', '')
-    return text
-
+    try:
+        if len(result)>1:
+            for item in result:
+                word=item.replace(' ', '')
+                if len(word)==7:
+                    text=word
+        else:
+            text=result[0].replace(' ', '')
+        return text
+    except IndexError as e:
+        raise Exception('Unable to detect numberplate, try again with a different image or type the numberplate.') from e
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Detect a numberplate from an image')

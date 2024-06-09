@@ -17,6 +17,10 @@ You can run this application in dev mode that enables live coding using:
 
 # Databases
 
+## Weaviate 
+to setup the weaviate use this command: docker run -p 8080:8080 -p 50051:50051 --name vv-automobile-weaviate cr.weaviate.io/semitechnologies/weaviate:1.25.2 
+To fill the database, checkout: https://github.com/vv-solutions/vv-automobile-ml
+
 ## Postgresql: 
 To setup the Postgresql database, open a terminal in the folder “vv-automobile-pg-repl” and “run docker-compose up -d”
 ![pg.png](src%2Fmain%2Fresources%2Fimages%2Fpg.png)
