@@ -29,18 +29,17 @@ public class ChatFacade {
         BufferedReader stdInput = new BufferedReader(new
                 InputStreamReader(p.getInputStream()));
 
-        String answer = null;
+        StringBuilder answer = new StringBuilder("");
         String line;
         while ((line = stdInput.readLine()) != null) {
-            answer = line;
+            answer.append(line).append("\n");
         }
 
-        if(answer.contains("error:")){
-            logger.errorf("chat failed with message: [%s]",answer.split("error:")[1]);
-            throw new ChatException(answer.split("error:")[1]);
+        if(answer.toString().contains("error:")){
+            logger.errorf("chat failed with message: [%s]",answer.toString().split("error:")[1]);
+            throw new ChatException(answer.toString().split("error:")[1]);
         }
 
-
-        return new ChatDTO(answer.split("result:")[1]);
+        return new ChatDTO(answer.toString().split("result:")[1]);
     }
 }
